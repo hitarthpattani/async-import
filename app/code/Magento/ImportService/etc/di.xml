@@ -15,6 +15,10 @@
                 type="Magento\ImportService\Model\SourceUploadResponse" />
     <preference for="Magento\ImportService\Api\SourceRepositoryInterface"
                 type="Magento\ImportService\Model\SourceRepository"/>
+    <preference for="Magento\ImportService\Api\Data\PartialSourceInterface"
+                type="Magento\ImportService\Model\PartialSource" />
+    <preference for="Magento\ImportService\Api\PartialSourceUploadInterface"
+                type="Magento\ImportService\Model\PartialSourceUpload" />
     <virtualType name="Magento\ImportService\Model\Import\Type\Csv" type="Magento\ImportService\Model\Import\Type\FileSourceType">
         <arguments>
             <argument name="sourceType" xsi:type="string">csv</argument>

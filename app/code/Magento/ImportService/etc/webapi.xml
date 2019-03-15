@@ -13,6 +13,12 @@
             <resource ref="Magento_ImportExport::import" />
         </resources>
     </route>
+    <route url="/V1/import/source/partial" method="POST">
+        <service class="Magento\ImportService\Api\PartialSourceUploadInterface" method="execute"/>
+        <resources>
+            <resource ref="Magento_ImportExport::import" />
+        </resources>
+    </route>
     <route url="/V1/import/:uuid" method="GET">
         <service class="Magento\ImportService\Api\ImportStatusInterface" method="execute"/>
         <resources>
