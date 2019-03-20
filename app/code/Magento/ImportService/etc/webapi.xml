@@ -10,7 +10,7 @@
     <route url="/V1/import/source" method="POST">
         <service class="Magento\ImportService\Api\SourceUploadInterface" method="execute"/>
         <resources>
-            <resource ref="Magento_ImportExport::import" />
+            <resource ref="Magento_ImportService::import" />
         </resources>
     </route>
     <route url="/V1/import/source/partial" method="POST">
@@ -22,7 +22,13 @@
     <route url="/V1/import/:uuid" method="GET">
         <service class="Magento\ImportService\Api\ImportStatusInterface" method="execute"/>
         <resources>
-            <resource ref="Magento_ImportExport::import" />
+            <resource ref="Magento_ImportService::import" />
+        </resources>
+    </route>
+    <route url="/V1/import/operation-id/:uuid" method="PUT">
+        <service class="Magento\ImportService\Api\ImportRestartOperationInterface" method="execute"/>
+        <resources>
+            <resource ref="Magento_ImportService::import" />
         </resources>
     </route>
 </routes>

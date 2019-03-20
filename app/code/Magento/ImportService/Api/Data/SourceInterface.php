@@ -93,6 +93,13 @@ interface SourceInterface extends ExtensibleDataInterface
     public function getCreatedAt();
 
     /**
+     * Set Import date
+     *
+     * @return string
+     */
+    public function setCreatedAt($date);
+
+    /**
      * Retrieve existing extension attributes object or create a new one.
      *
      * @return \Magento\ImportService\Api\Data\SourceExtensionInterface|null

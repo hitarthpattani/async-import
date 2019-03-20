@@ -12,6 +12,7 @@ use Magento\ImportService\Api\Data\SourceUploadResponseInterface;
 use Magento\ImportService\Model\Import\SourceTypePool;
 use Magento\ImportService\Model\Import\Type\PartialSourceType;
 use Magento\ImportService\ImportServiceException;
+use Magento\Framework\Stdlib\DateTime\DateTime;
 
 /**
  * Define the source type pool and process the request
@@ -29,14 +30,22 @@ class PersistentSourceProcessor implements SourceProcessorInterface
     private $partialSourceType;
 
     /**
+     * @var DateTime
+     */
+    private $dateTime;
+
+    /**
      * @param SourceTypePool $sourceTypePool
+     * @param DateTime $dateTime
      * @param PartialSourceType $partialSourceType
      */
     public function __construct(
         SourceTypePool $sourceTypePool,
+        DateTime $dateTime,
         PartialSourceType $partialSourceType
     ) {
         $this->sourceTypePool = $sourceTypePool;
+        $this->dateTime = $dateTime;
         $this->partialSourceType = $partialSourceType;
     }
 
@@ -71,6 +80,7 @@ class PersistentSourceProcessor implements SourceProcessorInterface
         $sourceType = $this->sourceTypePool->getSourceType($source);
 
         /** save processed content get updated source object */
+        $source->setCreatedAt(strftime('%Y-%m-%d %H:%M:%S', $this->dateTime->gmtTimestamp()));
         $source = $sourceType->save($source);
 
         /** return response with details */
