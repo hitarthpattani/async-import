@@ -49,10 +49,10 @@ class ImportStatus implements ImportStatusInterface
     /**
      * Get import source status.
      *
-     * @param int $uuid
+     * @param string $uuid
      * @return ImportStatusResponseFactory
      */
-    public function execute(int $uuid)
+    public function execute(string $uuid)
     {
         // Create new response object
         $response = $this->responseFactory->create();

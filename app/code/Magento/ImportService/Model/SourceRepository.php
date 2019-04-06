@@ -84,12 +84,13 @@ class SourceRepository implements SourceRepositoryInterface
      *
      * @throws NoSuchEntityException
      */
-    public function getById($id)
+    public function getByUuid($uuid)
     {
+        /** @var \Magento\ImportService\Api\Data\SourceInterface $source */
         $source = $this->sourceFactory->create();
-        $this->sourceResourceModel->load($source, $id);
-        if (!$source->getId()) {
-            throw new NoSuchEntityException(__('Source with id "%1" does not exist.', $id));
+        $this->sourceResourceModel->load($source, $uuid, $source::UUID);
+        if (!$source->getUuid()) {
+            throw new NoSuchEntityException(__('Source with uuid "%1" does not exist.', $uuid));
         }
 
         return $source;
@@ -118,9 +119,9 @@ class SourceRepository implements SourceRepositoryInterface
      * @throws CouldNotDeleteException
      * @throws NoSuchEntityException
      */
-    public function deleteById($id)
+    public function deleteByUuid($uuid)
     {
-        return $this->delete($this->getById($id));
+        return $this->delete($this->getByUuid($uuid));
     }
 
     /**

@@ -15,8 +15,8 @@ interface ImportStatusInterface
     /**
      * Get import source status.
      *
-     * @param int $uuid
+     * @param string $uuid
      * @return \Magento\ImportService\Api\Data\ImportStatusResponseInterface
      */
-    public function execute(int $uuid);
+    public function execute(string $uuid);
 }

@@ -1,7 +1,8 @@
 {
   "import_service_source": {
     "column": {
-      "source_id": true,
+      "entity_id": true,
+      "uuid": true,
       "status": true,
       "source_type": true,
       "import_type": true,
@@ -9,7 +10,8 @@
       "created_at": true
     },
     "constraint": {
-      "PRIMARY": true
+      "PRIMARY": true,
+      "IMPORT_SERVICE_SOURCE_UUID": true
     }
   }
 }

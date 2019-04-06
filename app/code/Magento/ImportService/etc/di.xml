@@ -22,7 +22,10 @@
     <virtualType name="Magento\ImportService\Model\Import\Type\Csv" type="Magento\ImportService\Model\Import\Type\FileSourceType">
         <arguments>
             <argument name="sourceType" xsi:type="string">csv</argument>
-            <argument name="mime" xsi:type="string">text/csv</argument>
+            <argument name="allowedMimeTypes" xsi:type="array">
+                <item name="plain" xsi:type="string">text/plain</item>
+                <item name="csv" xsi:type="string">text/csv</item>
+            </argument>
         </arguments>
     </virtualType>
     <type name="Magento\ImportService\Model\Import\SourceTypePool">
@@ -30,6 +33,50 @@
             <argument name="sourceTypes" xsi:type="array">
                 <item name="csv" xsi:type="object">Magento\ImportService\Model\Import\Type\Csv</item>
             </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\ImportService\Model\Source\Validator\LocalPathFileProcessorValidator" type="Magento\ImportService\Model\Source\Validator\ImportServiceValidator">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="source_request_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\SourceRequestValidator</item>
+                <item name="local_path_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\LocalPathValidator</item>
+                <item name="mime_type_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\MimeTypeValidator</item>
+                <item name="uuid_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\UuidValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\ImportService\Model\Import\Processor\LocalPathFileProcessor">
+        <arguments>
+            <argument name="validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\LocalPathFileProcessorValidator</argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\ImportService\Model\Source\Validator\Base64EncodedDataProcessorValidator" type="Magento\ImportService\Model\Source\Validator\ImportServiceValidator">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="source_request_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\SourceRequestValidator</item>
+                <item name="base64_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\Base64Validator</item>
+                <item name="uuid_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\UuidValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\ImportService\Model\Import\Processor\Base64EncodedDataProcessor">
+        <arguments>
+            <argument name="validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\Base64EncodedDataProcessorValidator</argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\ImportService\Model\Source\Validator\ExternalFileProcessorValidator" type="Magento\ImportService\Model\Source\Validator\ImportServiceValidator">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="source_request_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\SourceRequestValidator</item>
+                <item name="remote_url_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\RemoteUrlValidator</item>
+                <item name="mime_type_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\MimeTypeValidator</item>
+                <item name="uuid_validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\UuidValidator</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\ImportService\Model\Import\Processor\ExternalFileProcessor">
+        <arguments>
+            <argument name="validator" xsi:type="object">Magento\ImportService\Model\Source\Validator\ExternalFileProcessorValidator</argument>
         </arguments>
     </type>
     <type name="Magento\ImportService\Model\Import\SourceProcessorPool">
@@ -50,27 +97,15 @@
             </argument>
         </arguments>
     </type>
-    <type name="\Magento\ImportService\Model\Source\Validator">
-        <arguments>
-            <argument name="allowedMimeTypes" xsi:type="array">
-                <item name="plain" xsi:type="string">text/plain</item>
-                <item name="csv" xsi:type="string">text/csv</item>
-            </argument>
-        </arguments>
-    </type>
-    <type name="\Magento\ImportService\Model\Import\SourceTypesValidator">
-        <arguments>
-            <argument name="allowedMimeTypes" xsi:type="array">
-                <item name="csv" xsi:type="string">text/csv</item>
-            </argument>
-        </arguments>
-    </type>
-    <preference for="Magento\ImportService\Model\Import\SourceTypesValidatorInterface"
-                type="Magento\ImportService\Model\Import\SourceTypesValidator"/>
-
     <preference for="Magento\ImportService\Api\ImportStatusInterface" type="Magento\ImportService\Model\ImportStatus" />
     <preference for="Magento\ImportService\Api\Data\ImportStatusResponseInterface" type="Magento\ImportService\Model\ImportStatusResponse" />
     <preference for="Magento\ImportService\Api\Data\ImportStatusResponseItemInterface" type="Magento\ImportService\Model\ImportStatusResponseItem" />
-
-    <preference for="Magento\ImportService\Api\ImportRestartOperationInterface" type="Magento\ImportService\Model\ImportRestartOperation"/>
+    <preference for="Magento\ImportService\Api\ImportStartInterface"
+                type="Magento\ImportService\Model\ImportStart" />
+    <preference for="Magento\ImportService\Api\Data\ImportStartResponseInterface"
+                type="Magento\ImportService\Model\ImportStartResponse" />
+    <preference for="Magento\ImportService\Api\Data\ImportConfigInterface"
+                type="Magento\ImportService\Model\ImportConfig" />
+    <preference for="Magento\ImportService\Api\ImportRestartOperationInterface"
+                type="Magento\ImportService\Model\ImportRestartOperation"/>
 </config>

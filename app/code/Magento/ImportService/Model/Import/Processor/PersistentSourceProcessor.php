@@ -84,6 +84,6 @@ class PersistentSourceProcessor implements SourceProcessorInterface
         $source = $sourceType->save($source);
 
         /** return response with details */
-        return $response->setSource($source)->setSourceId($source->getSourceId())->setStatus($source->getStatus());
+        return $response->setSource($source)->setUuid($source->getUuid())->setStatus($source->getStatus());
     }
 }

@@ -11,6 +11,8 @@ use Magento\Framework\Filesystem;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\ImportService\Api\Data\SourceInterface;
 use Magento\ImportService\Api\Data\SourceUploadResponseInterface;
+use Magento\ImportService\Model\Source\Validator\ValidatorInterface;
+use Magento\ImportService\ImportServiceException;
 
 /**
  * Base64 encoded data processor for asynchronous import
@@ -28,12 +30,20 @@ class Base64EncodedDataProcessor implements SourceProcessorInterface
     private $persistantUploader;
 
     /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * @param PersistentSourceProcessor $persistantUploader
+     * @param ValidatorInterface $validator
      */
     public function __construct(
-        PersistentSourceProcessor $persistantUploader
+        PersistentSourceProcessor $persistantUploader,
+        ValidatorInterface $validator
     ) {
         $this->persistantUploader = $persistantUploader;
+        $this->validator = $validator;
     }
 
     /**
@@ -41,6 +51,9 @@ class Base64EncodedDataProcessor implements SourceProcessorInterface
      */
     public function processUpload(SourceInterface $source, SourceUploadResponseInterface $response)
     {
+        /** @var array $errors */
+        $errors = $this->validator->validate($source);
+
         /** @var string $content */
         $content = base64_decode($source->getImportData());
 

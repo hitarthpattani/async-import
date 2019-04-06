@@ -32,6 +32,22 @@ class SourceTypePool
     }
 
     /**
+     * get all mime types
+     *
+     * @return array
+     */
+    public function getAllowedMimeTypes()
+    {
+        $allowedMimeTypes = [];
+
+        foreach ($this->sourceTypes as $key => $object) {
+            $allowedMimeTypes = array_replace($allowedMimeTypes, $object->getAllowedMimeTypes());
+        }
+
+        return $allowedMimeTypes;
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws ImportServiceException
